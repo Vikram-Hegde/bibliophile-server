@@ -70,12 +70,13 @@ const getRelated = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             regExGenres = decodedGenres === null || decodedGenres === void 0 ? void 0 : decodedGenres.map((genre) => RegExp(genre, "i"));
         }
         else {
-            regExGenres = RegExp(genres, "i");
+            regExGenres = [RegExp(genres, "i")];
         }
         if (mongoose_1.default.Types.ObjectId.isValid(id)) {
-            const data = yield bookSchema_1.bookModel
-                .find({ genre: { $in: regExGenres }, _id: { $ne: id } })
-                .limit(4);
+            const data = yield bookSchema_1.bookModel.aggregate([
+                { $match: { genre: { $in: regExGenres }, _id: { $ne: id } } },
+                { $sample: { size: 4 } },
+            ]);
             res.status(200).json(data);
         }
     }
