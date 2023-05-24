@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"module": "NodeNext",
+		"target": "ES2022",
+		"outDir": "dist",
+		"rootDir": "./"
+	},
+	"exclude": ["node_modules", "**/*.spec.ts"]
+}
