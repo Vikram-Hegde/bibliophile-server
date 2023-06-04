@@ -4,7 +4,7 @@ import { bookModel, IBook, reviewModel } from "../../Models/bookSchema";
 
 const getBooks = async (req: Request, res: Response) => {
   try {
-    const data = await bookModel.find();
+    const data = await bookModel.find().lean().exec();
     res.status(200).json(data);
   } catch (error) {
     res.status(404).json(error);
@@ -23,7 +23,7 @@ const createBook = async (req: Request, res: Response) => {
 const getBook = async (req: Request, res: Response) => {
   const { id } = req.params;
   if (mongoose.Types.ObjectId.isValid(id)) {
-    const data = await bookModel.findById(id).populate("reviews");
+    const data = await bookModel.findById(id).populate("reviews").lean().exec();
     res.status(200).json(data);
   }
 };
@@ -60,7 +60,7 @@ const getRelated = async (req: Request, res: Response) => {
       const data = await bookModel.aggregate([
         { $match: { genre: { $in: regExGenres }, _id: { $ne: id } } },
         { $sample: { size: 4 } },
-      ]);
+      ]).exec();
       res.status(200).json(data);
     }
   } catch (error) {
