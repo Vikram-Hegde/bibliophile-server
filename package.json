@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "ts-init": "pnpm exec tsc --init",
-    "build": "pnpm run purge && pnpm exec tsc",
+    "build": "pnpm exec tsc",
     "start": "node dist/index.js",
     "dev": "nodemon index.ts"
   },
