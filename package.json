@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "ts-init": "npm exec tsc --init",
-    "build": "npm exec tsc",
+    "build": "npm install && npm exec tsc",
     "start": "node dist/index.js",
     "dev": "nodemon index.ts"
   },
